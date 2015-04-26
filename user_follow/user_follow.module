@@ -25,12 +25,16 @@ function user_follow_menu() {
  */
 function user_follow_user_view($account, $view_mode) {
   global $user;
+  $fol_id = $account->uid;
+
+  if ($user->uid == $fol_id) {
+    return;
+  }
+
   drupal_add_library('system', 'drupal.ajax');
   if (!isset($account->content['fol_link'])) {
     $account->content['fol_link'] = array();
   }
-
-  $fol_id = $account->uid;
   $result = db_select('user_follow', 'uf')
     ->fields('uf', array('uid'))
     ->condition('uf.uid', $fol_id)
